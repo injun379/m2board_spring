@@ -16,7 +16,7 @@ var goUpdate = function(){
 </script>
 </head>
 <body>
-<form action="BoardInsertAction.do" method="post" name="myform" enctype="multipart/form-data">
+<form action="BoardInsertAction.do" method="post" name="myform" >
 <table>
 	<caption>글 쓰기</caption>
 <tr>

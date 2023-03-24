@@ -18,7 +18,7 @@ var confirm_delete = function(){
 </script>
 </head>
 <body>
-<table width="600">
+<table>
 	<caption>글 상세보기</caption>
 <tr>
 	<th>글번호</th>
@@ -44,16 +44,16 @@ var confirm_delete = function(){
 	<th>내용</th>
 	<td>${boardDto.content }</td>
 </tr>
-<c:if test="${boardDto.fileList.size() != 0 }"> <!-- 파일이 있을 때만 출력 -->
-<tr>
-	<th>파일</th>
-	<td>
-		<c:forEach items="${boardDto.fileList }" var="fileDto" varStatus="st">
-		file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)<br/>
-		</c:forEach>
-	</td>
-</tr>
-</c:if>
+<%-- <c:if test="${boardDto.fileList.size() != 0 }"> <!-- 파일이 있을 때만 출력 --> --%>
+<!-- <tr> -->
+<!-- 	<th>파일</th> -->
+<!-- 	<td> -->
+<%-- 		<c:forEach items="${boardDto.fileList }" var="fileDto" varStatus="st"> --%>
+<%-- 		file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)<br/> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</td> -->
+<!-- </tr> -->
+<%-- </c:if> --%>
 </table>
 <a href="BoardList.do">[리스트]</a>
 <c:if test="${boardDto.memberDto.id == sessionScope.userInfo.id }"> <!-- DB에서 가져온 해당 글 작성자 id와 세션 id가 일치 -->

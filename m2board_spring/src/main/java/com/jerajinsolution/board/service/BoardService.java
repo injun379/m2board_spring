@@ -21,4 +21,28 @@ public class BoardService implements BoardServiceInterface {
 		return boardInterface.selectBoardList();
 	}
 
+	/* 게시물 조회수 증가 */
+	@Override
+	public int pulsReadcount(Long no) {
+		return boardInterface.updateReadcount(no);
+	}
+
+	/* 게시물 상세 보기 */
+	@Override
+	public BoardDto getBoardView(Long no) {
+		return boardInterface.selectBoardDetail(no);
+	}
+
+	/* 게시물 수정 */
+	@Override
+	public int modifyBoard(BoardDto boardDto) {
+		return boardInterface.updateBoard(boardDto);
+	}
+
+	/* 게시물 삭제 */
+	@Override
+	public int removeBoard(BoardDto boardDto) {
+		return boardInterface.deleteBoard(boardDto);
+	}
+
 }

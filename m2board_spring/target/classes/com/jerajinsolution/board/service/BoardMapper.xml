@@ -38,4 +38,60 @@
 			ON b.id = m.id
 		 ORDER BY no DESC
 	</select>
+	
+	<!-- 게시물 등록 -->
+	<insert id="boardInsert" parameterType="com.jerajinsolution.board.service.BoardDto">
+		INSERT INTO tbl_board(
+							no
+						  , title
+						  , content
+						  , id
+						  )
+					VALUES(
+						seq_board.nextval
+					  , #{title}
+					  , #{content}
+					  , #{memberDto.id})
+	</insert>
+	
+	<!-- 게시물 조회수 증가 -->
+	<update id="boardReadcount" parameterType="Long">
+		UPDATE tbl_board
+		   SET readcount = readcount + 1 
+		 WHERE no = #{no}
+	</update>
+	
+	
+	<!-- 게시물 상세 보기 -->
+	<select id="boardView" parameterType="Long" resultMap="boardDto">
+		SELECT b.no
+			 , b.title
+			 , b.content
+			 , b.id
+			 , b.regdate
+			 , b.readcount
+			 , m.name
+		  FROM tbl_board b 
+		  JOIN tbl_member m
+		    ON b.id = m.id
+		 WHERE b.no = #{no}
+	</select>
+	
+	<!-- 게시물 수정 -->
+	<update id="boardUpdate" parameterType="com.jerajinsolution.board.service.BoardDto">
+		UPDATE tbl_board
+		   SET title = #{title}
+		     , content = #{content}
+		 WHERE no = #{no}
+		   AND id = #{memberDto.id}
+	</update>
+	
+	<!-- 게시물 삭제 -->
+	<delete id="boardDelete" parameterType="com.jerajinsolution.board.service.BoardDto">
+		DELETE 
+		  FROM tbl_board
+		 WHERE no = #{no}
+		   AND id = #{memberDto.id}
+	</delete>
+	
 </mapper>
