@@ -105,7 +105,7 @@ function change_user_id(){ //아이디 중복체크(ajax 이용)
 		return;
 	}
 	
-	new Request('checkID', 'user_id='+user_id, callback, 'POST');
+	new Request('CheckID.do', 'user_id='+user_id, callback, 'POST');
 	
 }
 

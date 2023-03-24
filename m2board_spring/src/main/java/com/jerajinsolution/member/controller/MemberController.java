@@ -32,14 +32,8 @@ public class MemberController {
 	public ModelAndView login(Model model,
 			HttpSession session,
 			@RequestParam(value="id", required=true) String id,
-			@RequestParam(value="password", required=true) String password) {
-		
-//		int idset = 0;
-//		if(setid != null) {
-//			idset = Integer.parseInt(setid);
-//		}
-		
-//		System.out.println("setid : " + idset);
+			@RequestParam(value="password", required=true) String password,
+			@RequestParam(value="setid", required=true) String setid) {
 		
 		MemberDto memberDto = new MemberDto();
 		memberDto.setId(id);
@@ -51,13 +45,8 @@ public class MemberController {
 		
 		System.out.println("userInfo: " + userInfo);
 		
-		if(userInfo!=null) { //로그인 성공
-//			try {
-//				Cookie cookie = Cooker.createCookie("id", id, idset == 1 ? 60*60*24*30 : 0);
-//				model.addCookie(cookie);
-//			} catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}
+		if(userInfo != null) { //로그인 성공
+			
 			System.out.println("로그인 성공!!");
 			session.setAttribute("userInfo", userInfo);
 			return new ModelAndView("redirect:BoardList.do");
@@ -93,13 +82,13 @@ public class MemberController {
 	}
 	
 	/* 회원 가입 화면 요청 */
-	@RequestMapping(value="/register", method=RequestMethod.GET)
+	@RequestMapping(value="/MemberRegister.do", method=RequestMethod.GET)
 	public ModelAndView memberRegisterView(Model model) {
 		return new ModelAndView("/member/member");
 	}
 	
 	/* 회원 가입 처리 요청 */
-	@RequestMapping(value="/MemberRegister.do", method=RequestMethod.POST) 
+	@RequestMapping(value="/MemberRegisterAction.do", method=RequestMethod.POST) 
 	public ModelAndView memberRegisterAction(Model model,
 			@RequestParam(value="user_id", required=true) String id,
 			@RequestParam(value="user_pw", required=true) String password,

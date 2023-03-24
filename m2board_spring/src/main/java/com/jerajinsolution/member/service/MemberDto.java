@@ -1,5 +1,6 @@
 package com.jerajinsolution.member.service;
 
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class MemberDto {
 	private String id;
@@ -22,7 +23,7 @@ public class MemberDto {
 	}
 	public void setPassword(String password) {
 		//this.password = password;
-		this.password = password; //패스워드 암호화
+		this.password = DigestUtils.md5Hex(password); //패스워드 암호화
 	}
 	public String getName() {
 		return name;

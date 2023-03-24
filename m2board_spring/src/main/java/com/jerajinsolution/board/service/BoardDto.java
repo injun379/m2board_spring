@@ -1,5 +1,8 @@
 package com.jerajinsolution.board.service;
 
+import java.util.List;
+
+import com.jerajinsolution.file.FileDto;
 import com.jerajinsolution.member.service.MemberDto;
 
 public class BoardDto {
@@ -9,7 +12,7 @@ public class BoardDto {
 	private String regdate;
 	private int readcount;
 	private MemberDto memberDto;
-//	private List<FileDto> fileList; //게시물 1개에(BoardDto)에 속해 있는 파일들
+	private List<FileDto> fileList; //게시물 1개에(BoardDto)에 속해 있는 파일들
 	
 	public Long getNo() {
 		return no;
@@ -47,24 +50,17 @@ public class BoardDto {
 	public void setMemberDto(MemberDto memberDto) {
 		this.memberDto = memberDto;
 	}
-//	public List<FileDto> getFileList() {
-//		return fileList;
-//	}
-//	public void setFileList(List<FileDto> fileList) {
-//		this.fileList = fileList;
-//	}
-//	
-//	@Override
-//	public String toString() {
-//		return "BoardDto [no=" + no + ", title=" + title + ", content=" + content + ", regdate=" + regdate
-//				+ ", readcount=" + readcount + ", memberDto=" + memberDto + ", fileList=" + fileList + "]";
-//	}
+	public List<FileDto> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileDto> fileList) {
+		this.fileList = fileList;
+	}
 	
 	@Override
 	public String toString() {
 		return "BoardDto [no=" + no + ", title=" + title + ", content=" + content + ", regdate=" + regdate
-				+ ", readcount=" + readcount + ", memberDto=" + memberDto + "]";
+				+ ", readcount=" + readcount + ", memberDto=" + memberDto + ", fileList=" + fileList + "]";
 	}
-	
 	
 }
