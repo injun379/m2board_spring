@@ -2,7 +2,7 @@ package com.jerajinsolution.board.service;
 
 import java.util.List;
 
-import com.jerajinsolution.file.FileDto;
+import com.jerajinsolution.file.service.FileDto;
 import com.jerajinsolution.member.service.MemberDto;
 
 public class BoardDto {

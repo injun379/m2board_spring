@@ -52,6 +52,9 @@
 					  , #{title}
 					  , #{content}
 					  , #{memberDto.id})
+		<selectKey keyProperty="no" resultType="Long" order="AFTER">
+			SELECT seq_board.currval FROM dual
+		</selectKey>
 	</insert>
 	
 	<!-- 게시물 조회수 증가 -->
@@ -93,5 +96,21 @@
 		 WHERE no = #{no}
 		   AND id = #{memberDto.id}
 	</delete>
+	
+	
+	<insert id="boardFileInsert" parameterType="com.jerajinsolution.file.service.FileDto">
+		INSERT INTO tbl_file(fno
+					  	   , no
+					       , originalName
+					       , targetName
+					       , folder
+					       , fileSize)
+		VALUES(seq_file.nextval
+		     , #{no}
+		     , #{originalName}
+		     , #{targetName}
+		     , #{folder}
+		     , #{fileSize})
+	</insert>
 	
 </mapper>

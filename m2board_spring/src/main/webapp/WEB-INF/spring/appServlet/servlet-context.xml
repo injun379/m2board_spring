@@ -21,6 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+	<!-- 파일 업로드을 위한 multipartResolver 설정  -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
+
 	<!-- commons dbcp -->
     <beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
@@ -39,6 +45,7 @@
 			<beans:list>
 				<beans:value>classpath:com/jerajinsolution/board/service/BoardMapper.xml</beans:value>
 				<beans:value>classpath:com/jerajinsolution/member/service/MemberMapper.xml</beans:value>
+				<beans:value>classpath:com/jerajinsolution/file/service/FileMapper.xml</beans:value>
 			</beans:list>
 		</beans:property>
 	</beans:bean>

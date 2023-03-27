@@ -16,7 +16,7 @@ var goUpdate = function(){
 </script>
 </head>
 <body>
-<form action="BoardInsertAction.do" method="post" name="myform" >
+<form action="BoardInsertAction.do" method="post" name="myform" enctype="multipart/form-data">
 <table>
 	<caption>글 쓰기</caption>
 <tr>
@@ -38,13 +38,12 @@ var goUpdate = function(){
 		</script>
 	</td>
 </tr>
-<!-- <tr> -->
-<!-- 	<th>파일</th> -->
-<!-- 	<td> -->
-<!-- 		<input type="file" name="file1" /><br/> -->
-<!-- 		<input type="file" name="file2" /><br/> -->
-<!-- 	</td> -->
-<!-- </tr> -->
+<tr>
+	<th>파일</th>
+	<td>
+		<input type="file" multiple="multiple" name="files" /><br/>
+	</td>
+</tr>
 <tr>
 	<td colspan="2" align="center">
 		<input type="button" value="완료" onclick="goUpdate();" />
