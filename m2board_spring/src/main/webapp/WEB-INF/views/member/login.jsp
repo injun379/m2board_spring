@@ -20,7 +20,7 @@ function goUserRegist(){  //회원가입
 <tr>
 	<th>ID</th>
 	<td>
-		<input type="text" name="id" autofocus="autofocus" required="required" value="${id }" />
+		<input type="text" name="id" autofocus="autofocus" required="required" value="${cookie.id.value }" />
 	</td>
 </tr>
 <tr>

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/board.css" type="text/css" />
-<script type="text/javascript" src="se2/js/service/HuskyEZCreator.js"></script>
+<script type="text/javascript" src="resources/se2/js/service/HuskyEZCreator.js"></script>
 <script type="text/javascript">
 var goUpdate = function(){
 	var f = document.myform;
@@ -26,18 +26,18 @@ var goUpdate = function(){
 </tr>
 <tr>
 	<th>제목</th>
-	<td><input type="text" name="title" autofocus="autofocus" required="required" value="${boardDto.title }"/></td>
+	<td><input type="text" name="title" style="width:645px;" autofocus="autofocus" required="required" value="${boardDto.title }"/></td>
 </tr>
 <tr>
 	<th>내용</th>
-	<td sytle="width:fit-content;">
-		<textarea rows="5" style="width:645px;" name="content" id="content" required="required" >${boardDto.content }</textarea>
-				<script type="text/javascript">
+	<td>
+		<textarea rows="5" style="width:645px;"  name="content" id="content" required="required" >${boardDto.content }</textarea>
+		<script type="text/javascript">
 			var oEditors = [];
 			nhn.husky.EZCreator.createInIFrame({
 			 oAppRef: oEditors,
 			 elPlaceHolder: "content",
-			 sSkinURI: "se2/SmartEditor2Skin.html",
+			 sSkinURI: "resources/se2/SmartEditor2Skin.html",
 			 fCreator: "createSEditor2"
 			});
 		</script>

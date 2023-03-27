@@ -1,6 +1,5 @@
 package com.jerajinsolution.board.controller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jerajinsolution.board.service.BoardDto;
 import com.jerajinsolution.board.service.BoardInterface;
@@ -26,13 +24,13 @@ public class BoardController {
 	
 	/* 게시물 등록 화면 요청 */
 	@RequestMapping(value="/BoardInsert.do", method = RequestMethod.GET)
-	public ModelAndView boardInsert() {
-		return new ModelAndView("board/insert");
+	public String boardInsert() {
+		return "board/insert";
 	}
 	
 	/* 게시물 등록 처리 */
 	@RequestMapping(value="/BoardInsertAction.do", method = RequestMethod.POST)
-	public ModelAndView boardinsert(Model model,
+	public String boardinsert(Model model,
 			HttpSession session,
 			@RequestParam(value="title", required=true) String title,
 			@RequestParam("uploadFile") MultipartFile uploadFile,
@@ -41,10 +39,9 @@ public class BoardController {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
 		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "Login.do");
-			return mav;
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 		
 			
@@ -58,28 +55,27 @@ public class BoardController {
 		int result = boardDao.insertBoard(boardDto);
 		
 		if(result == 1) {
-			return new ModelAndView("redirect:BoardList.do");
+			return "redirect:BoardList.do";
 		}else {
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "글 등록 실패");
-			mav.addObject("url", "javascript:history.back();");
-			return mav;
+			model.addAttribute("msg", "글 등록 실패");
+			model.addAttribute("url", "javascript:history.back();");
+			return "/board/result";
 		}
 	}
 	
 	/* 게시물 목록 조회 */
 	@RequestMapping(value="/BoardList.do", method = RequestMethod.GET)
-	public ModelAndView boardList(Model model,
+	public String boardList(Model model,
 			HttpSession session) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
-		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "login");
-			return mav;
+		if(userInfo == null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 		
+		System.out.println("userInfo: " + userInfo);
 		String logInfo = userInfo.getName() + "(" + userInfo.getId() + ")님이 로그인하였습니다.";
 		
 		List<BoardDto> list = boardDao.selectBoardList();
@@ -90,71 +86,68 @@ public class BoardController {
 		}
 		*/
 		
-		ModelAndView mav = new ModelAndView("/board/list");
-		mav.addObject("logInfo", logInfo);
-		mav.addObject("list", list);
+		model.addAttribute("logInfo", logInfo);
+		model.addAttribute("list", list);
 		
-		return mav;
+		return "/board/list";
 	}
 	
 	/* 게시물 상세 보기 */
 	@RequestMapping(value="/BoardView.do", method=RequestMethod.GET)
-	public ModelAndView boardView(Model model,
+	public String boardView(Model model,
 			HttpSession session,
 			@RequestParam(value="no", required=true) Long no) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
 		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "Login.do");
-			return mav;
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 		
-		if(boardDao.updateReadcount(no) == 1) {
+		if(boardDao.updateReadcount(no) >= 1) {
 			BoardDto boardDto = boardDao.selectBoardDetail(no);
-			return new ModelAndView("/board/content", "boardDto", boardDto);
+			model.addAttribute("boardDto", boardDto);
+			return "/board/content";
 		}else {
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", no + "번 게시물이 존재하지 않습니다..");
-			mav.addObject("url", "BoardList.do");
-			return mav;
+			model.addAttribute("msg", no + "번 게시물이 존재하지 않습니다..");
+			model.addAttribute("url", "BoardList.do");
+			return "/board/result";
 		}
 	}
 	
 	/* 게시물 수정 화면 요청 */
 	@RequestMapping(value="/BoardUpdate.do", method=RequestMethod.GET)
-	public ModelAndView boardUpdate(Model model,
+	public String boardUpdate(Model model,
 			HttpSession session,
 			@RequestParam(value="no", required=true) Long no) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
-		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "Login.do");
-			return mav;
+		if(userInfo == null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 
 		BoardDto boardDto = boardDao.selectBoardDetail(no);
-		
-		return new ModelAndView("/board/update", "boardDto", boardDto);
+		model.addAttribute("/board/update");
+		model.addAttribute("boardDto", boardDto);
+		return "/board/update";
 	}
 	
 	/* 게시물 수정 처리 */
 	@RequestMapping(value="/BoardUpdateAction.do", method=RequestMethod.POST)
-	public ModelAndView boardUpdateAction(Model model,
+	public String boardUpdateAction(Model model,
 			HttpSession session,
 			@RequestParam(value="no", required=true) Long no,
 			@RequestParam(value="title", required=true) String title,
 			@RequestParam(value="content", required=true) String content) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
-		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "Login.do");
-			return mav;
+		if(userInfo == null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 		
 		String id = userInfo.getId();
@@ -172,29 +165,27 @@ public class BoardController {
 		
 		int result = boardDao.updateBoard(boardDto);
 		
-		if(result == 1) {
-			return new ModelAndView("redirect:BoardView.do?no=" + boardDto.getNo());
+		if(result >= 1) {
+			return "redirect:BoardView.do?no=" + boardDto.getNo();
 		}else {
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "글 수정 실패");
-			mav.addObject("url", "javascript:history.back();");
-			return mav;
+			model.addAttribute("msg", "글 수정 실패");
+			model.addAttribute("url", "javascript:history.back();");
+			return "/board/result";
 		}
 	}
 	
 	
 	/* 게시물 삭제 처리 */
 	@RequestMapping(value="/BoardDeleteAction.do", method=RequestMethod.GET)
-	public ModelAndView boardDeleteAction(Model model,
+	public String boardDeleteAction(Model model,
 			HttpSession session,
 			@RequestParam(value="no", required=true) Long no) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
 		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
-			ModelAndView mav = new ModelAndView("/board/result");
-			mav.addObject("msg", "먼저 로그인하셔야 합니다.");
-			mav.addObject("url", "Login.do");
-			return mav;
+			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
+			model.addAttribute("url", "Login.do");
+			return "/board/result";
 		}
 		
 		String id = userInfo.getId();
@@ -210,15 +201,14 @@ public class BoardController {
 		
 		int result = boardDao.deleteBoard(boardDto);
 		
-		ModelAndView mav = new ModelAndView("/board/result");
-		if(result == 1) {
-			mav.addObject("msg", no + "번 게시물이 삭제되었습니다.");
-			mav.addObject("url", "BoardList.do");
+		if(result >= 1) {
+			model.addAttribute("msg", no + "번 게시물이 삭제되었습니다.");
+			model.addAttribute("url", "BoardList.do");
 		}else {
-			mav.addObject("msg", "글 삭제 실패");
-			mav.addObject("url", "javascript:history.back();");
+			model.addAttribute("msg", "글 삭제 실패");
+			model.addAttribute("url", "javascript:history.back();");
 		}
-		return mav;
+		return "/board/result";
 	}
 		
 }
