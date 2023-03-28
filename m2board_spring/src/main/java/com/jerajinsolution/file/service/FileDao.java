@@ -1,5 +1,7 @@
 package com.jerajinsolution.file.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,8 +14,17 @@ public class FileDao implements FileInterface {
 	
 	@Override
 	public int insertBoardFile(FileDto fileDto) {
-		System.out.println("fileDto: " + fileDto + " in FileDao");
 		return sqlSessionTemplate.insert("com.jerajinsolution.file.service.FileMapper.boardFileInsert", fileDto);
+	}
+
+	@Override
+	public List<FileDto> selectBoardFile(Long no) {
+		return sqlSessionTemplate.selectList("com.jerajinsolution.file.service.FileMapper.boardFileSelect", no);
+	}
+
+	@Override
+	public FileDto selectFile(Long fno) {
+		return sqlSessionTemplate.selectOne("com.jerajinsolution.file.service.FileMapper.fileSelect", fno);
 	}
 	
 }

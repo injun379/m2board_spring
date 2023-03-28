@@ -4,6 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.jerajinsolution.file.service.FileMapper">
+
+	<resultMap type="com.jerajinsolution.file.service.FileDto" id="fileDto">
+		<result property="fno" column="fno" />
+		<result property="originalName" column="originalName" />
+		<result property="targetName" column="targetName" />
+		<result property="folder" column="folder" />
+		<result property="regdate" column="regdate" />
+		<result property="fileSize" column="fileSize" />
+		<result property="fileType" column="fileType" />
+		<result property="no" column="fno" />
+	</resultMap>
 	
 	<insert id="boardFileInsert" parameterType="com.jerajinsolution.file.service.FileDto">
 		INSERT INTO tbl_file(fno
@@ -19,5 +30,31 @@
 		     , #{folder}
 		     , #{fileSize})
 	</insert>
+	
+	<select id="boardFileSelect" parameterType="Long" resultMap="fileDto">
+		SELECT fno
+		     , no
+		     , originalName
+		     , targetName
+		     , folder
+		     , regdate
+		     , fileSize
+		     , fileType
+		  FROM tbl_file
+		 WHERE no = #{no} 
+	</select>
+	
+	<select id="fileSelect" parameterType="Long" resultMap="fileDto">
+		SELECT fno
+		     , no
+		     , originalName
+		     , targetName
+		     , folder
+		     , regdate
+		     , fileSize
+		     , fileType
+		  FROM tbl_file
+		 WHERE fno = #{fno}
+	</select>
 
 </mapper>

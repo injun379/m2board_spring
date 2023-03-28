@@ -23,6 +23,7 @@ import com.jerajinsolution.file.service.FileDto;
 import com.jerajinsolution.file.service.FileInterface;
 import com.jerajinsolution.member.service.MemberDto;
 
+
 @Controller
 public class BoardController {
 	
@@ -86,7 +87,7 @@ public class BoardController {
 			}
 			
 			FileDto fileDto = new FileDto();
-			fileDto.setTargetName(list.get(i).getName());
+			fileDto.setTargetName(list.get(i).getOriginalFilename());
 			fileDto.setOriginalName(list.get(i).getOriginalFilename());
 			fileDto.setFileSize(list.get(i).getSize());
 //			fileDto.setFileType(list.get(i).get);
@@ -169,6 +170,8 @@ public class BoardController {
 		
 		if(boardDao.updateReadcount(no) >= 1) {
 			BoardDto boardDto = boardDao.selectBoardDetail(no);
+			List<FileDto> fileList = fileDao.selectBoardFile(no); 
+			boardDto.setFileList(fileList);
 			model.addAttribute("boardDto", boardDto);
 			return "/board/content";
 		}else {
