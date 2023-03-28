@@ -26,5 +26,10 @@ public class FileDao implements FileInterface {
 	public FileDto selectFile(Long fno) {
 		return sqlSessionTemplate.selectOne("com.jerajinsolution.file.service.FileMapper.fileSelect", fno);
 	}
+
+	@Override
+	public int deleteBoardFile(Long no) {
+		return sqlSessionTemplate.delete("com.jerajinsolution.file.service.FileMapper.boardFileDelete", no);
+	}
 	
 }

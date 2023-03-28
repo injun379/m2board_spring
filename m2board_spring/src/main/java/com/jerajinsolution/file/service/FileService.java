@@ -24,4 +24,9 @@ public class FileService implements FileServieInterface {
 		return fileInterface.selectFile(fno);
 	}
 
+	@Override
+	public int removeBoardFile(Long no) {
+		return fileInterface.deleteBoardFile(no);
+	}
+
 }

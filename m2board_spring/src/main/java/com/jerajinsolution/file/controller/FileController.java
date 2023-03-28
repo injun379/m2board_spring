@@ -48,7 +48,9 @@ public class FileController {
 		response.setContentType("application/octet-stream");
 		try {
 			response.setHeader("Content-Disposition", "attachment;filename=\"" + //다른 이름으로 저장
-					URLEncoder.encode(fileDto.getOriginalName(), "UTF-8") + "\""); 
+					URLEncoder.encode(fileDto.getTargetName(), "UTF-8") + "\""); 
+			
+			System.out.println(fileDto);
 			
 			byte[] data = new byte[1024 * 100];
 			InputStream is = new BufferedInputStream(new FileInputStream(fileLocation + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName()));
@@ -64,7 +66,7 @@ public class FileController {
 			e.printStackTrace();
 		}
 		
-		return "file:";
+		return null;
 	}
 	
 	

@@ -12,4 +12,7 @@ public interface FileInterface {
 	/* 게시물 파일 조회 */
 	FileDto selectFile(Long fno);
 	
+	/* 게시물에 포함된 파일 일괄 삭제 */
+	int deleteBoardFile(Long no);
+	
 }

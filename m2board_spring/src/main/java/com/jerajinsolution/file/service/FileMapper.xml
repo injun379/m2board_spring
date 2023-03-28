@@ -56,5 +56,10 @@
 		  FROM tbl_file
 		 WHERE fno = #{fno}
 	</select>
+	
+	<delete id="boardFileDelete" parameterType="Long">
+		DELETE FROM tbl_file
+		 WHERE no = #{no}
+	</delete>
 
 </mapper>

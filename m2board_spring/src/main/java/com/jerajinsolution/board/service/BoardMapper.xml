@@ -9,7 +9,7 @@
 		<result property="no" column="no" />
 		<result property="title" column="title" />
 		<result property="content" column="content" />
-		<result property="regdate" column="redate" />
+		<result property="regdate" column="regdate" />
 		<result property="readcount" column="readcount" />
 		
 		<association property="memberDto" javaType="com.jerajinsolution.member.service.MemberDto" >
@@ -96,21 +96,5 @@
 		 WHERE no = #{no}
 		   AND id = #{memberDto.id}
 	</delete>
-	
-	
-	<insert id="boardFileInsert" parameterType="com.jerajinsolution.file.service.FileDto">
-		INSERT INTO tbl_file(fno
-					  	   , no
-					       , originalName
-					       , targetName
-					       , folder
-					       , fileSize)
-		VALUES(seq_file.nextval
-		     , #{no}
-		     , #{originalName}
-		     , #{targetName}
-		     , #{folder}
-		     , #{fileSize})
-	</insert>
-	
+		
 </mapper>

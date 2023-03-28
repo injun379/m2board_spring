@@ -39,6 +39,7 @@ public class BoardController {
 		return "board/insert";
 	}
 	
+	
 	/* 게시물 등록 처리 */
 	@RequestMapping(value="/BoardInsertAction.do", method = RequestMethod.POST)
 	public String boardinsert(Model model,
@@ -77,7 +78,20 @@ public class BoardController {
 			System.out.println("파일명 :" + fileRealName);
 			System.out.println("사이즈" + size);
 			
-			File saveFile = new File(uploadPath,toString() + fileRealName);
+			File saveFile = new File(uploadPath.toString() + "/" + fileRealName);
+			
+			 /*파일명이 중복으로 존재할 경우*/
+            if (fileRealName != null && !fileRealName.equals("")) {
+                if (saveFile.exists()) {
+                	//파일명 앞에 업로드 시간 초단위로 붙여 파일명 중복을 방지
+                	fileRealName = System.currentTimeMillis() +  "_" + fileRealName ;
+                    
+                    saveFile = new File(uploadPath.toString() + "/" + fileRealName);
+                }
+            }
+            
+			System.out.println(fileRealName);
+			System.out.println(saveFile);
 			try {
 				list.get(i).transferTo(saveFile);
 			} catch (IllegalStateException e) {
@@ -87,7 +101,7 @@ public class BoardController {
 			}
 			
 			FileDto fileDto = new FileDto();
-			fileDto.setTargetName(list.get(i).getOriginalFilename());
+			fileDto.setTargetName(fileRealName);
 			fileDto.setOriginalName(list.get(i).getOriginalFilename());
 			fileDto.setFileSize(list.get(i).getSize());
 //			fileDto.setFileType(list.get(i).get);
@@ -104,7 +118,9 @@ public class BoardController {
 		boardDto.setMemberDto(userInfo);
 		
 		
-		int result = boardDao.insertBoard(boardDto);
+		int result = 0;
+		
+		result = boardDao.insertBoard(boardDto);
 		System.out.println("seq: " + boardDto.getNo());
 		
 		boardDto.setFileList(fileList); //게시물 하나에 딸린 파일리스트를 담아주기
@@ -113,7 +129,7 @@ public class BoardController {
 		for(FileDto file : fileList) {
 			file.setNo(boardDto.getNo());
 			System.out.println("file: " + file);
-			int fileResult = fileDao.insertBoardFile(file);
+			fileDao.insertBoardFile(file);
 		}
 		
 		
@@ -247,6 +263,8 @@ public class BoardController {
 			@RequestParam(value="no", required=true) Long no) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
+		String fileLocation = "C:/oraclejava/upload";
+		
 		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
 			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
 			model.addAttribute("url", "Login.do");
@@ -262,8 +280,19 @@ public class BoardController {
 		boardDto.setNo(no);
 		boardDto.setMemberDto(memberDto);
 		
+		
 		System.out.println(boardDto);
 		
+		List<FileDto> fileList = fileDao.selectBoardFile(no);
+		for(FileDto fileDto : fileList) {
+			File file = new File(fileLocation + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName());
+			
+			if(file.exists() == true){		
+				file.delete();				// 해당 경로의 파일이 존재하면 파일 삭제
+			}
+		}
+		
+		fileDao.deleteBoardFile(no);
 		int result = boardDao.deleteBoard(boardDto);
 		
 		if(result >= 1) {
