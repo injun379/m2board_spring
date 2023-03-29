@@ -89,7 +89,7 @@ public class MemberController {
 			return "/board/result";
 		}
 		
-		String logoutInfo = userInfo.getName() + "(" + userInfo.getId() + ")님이 로그아웃 되었습니다.";
+		String logoutInfo = userInfo.getName() + "(" + userInfo.getId() + ")님이 로그아웃 하셨습니다.";
 		session.invalidate(); //세션 종료(세션 초기화)
 		
 		model.addAttribute("msg", logoutInfo);

@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/board.css" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="resources/js/ajax.js"></script>
 <!-- 다음 주소 찾기 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -131,64 +132,54 @@ function callback(xhr){
 </script>
 </head>
 <body>
+<div class="container mt-3">
+ <div class="media border p-3" style="width:max-content;">
+  <h2>회원 가입</h2>
 <form name="regist" method="post">
-<table border="1">
-	<caption>회원 가입</caption>
-<tr>
-	<th>아이디</th>
-	<td><input type="text" name="user_id" id="user_id" onkeyup="change_user_id()"/>
-		<div id="check_id_result">영문자+숫자 3~12문자로 작성하세요.</div>
-	</td>
-</tr>
-<tr>
-	<th>이름</th>
-	<td><input type="text" name="user_name" id="user_name" />2~6문자</td>
-</tr>
-<tr>
-	<th>비밀번호</th>
-	<td><input type="password" name="user_pw" id="user_pw" />4~20문자</td> 
-</tr>
-<tr>
-	<th>비밀번호 확인</th>
-	<td><input type="password" name="user_pw2" id="user_pw2" /></td>
-</tr>
-<tr>
-	<th>생일</th>
-	<td><input type="date" name="user_birth" id="user_birth" /></td>
-</tr>
-<tr>
-	<th>전화</th>
-	<td><input type="text" name="user_phone" id="user_phone" /></td>
-</tr>
-<tr>
-	<th>우편번호</th>
-	<td>
-		<input type="text" name="zipcode" readonly="readonly"
-		onclick="alert('검색버튼을 이용하여 입력하세요');" 
-		style="width:55px;"/>
-		<input type="button" value="검색" name="btnZipcode"
-		onclick="openZipcode()"
-		/>
-	</td>
-</tr>
-<tr>
-	<th>주소</th>
-	<td>
-		<input type="text" name="address1" style="width:250px;"/><br/>
-	</td>
-</tr>
-<tr>
-	<th>상세 주소</th>
-	<td>
-		<input type="text" name="address2" /><br/>
-	</td>
-</tr>
-<tr>
-	<td colspan="2" align="center">
-		<input type="button" value="완료" onclick="validate()" />
-	</td>
-</tr>
-</table>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">아이디</span>
+	<input type="text" class="form-control" name="user_id" id="user_id" onkeyup="change_user_id()"/>
+	<div id="check_id_result">영문자+숫자 3~12문자로 작성하세요.</div>
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">이름</span>
+	<input type="text" class="form-control"name="user_name" id="user_name" />2~6문자
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">비밀번호</span>
+	<input type="password" class="form-control" name="user_pw" id="user_pw" />4~20문자
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">비밀번호 확인</span>
+	<input type="password" class="form-control" name="user_pw2" id="user_pw2" />
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">생일</span>
+	<input type="date" class="form-control" name="user_birth" id="user_birth" />
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">전화</span>
+	<input type="text" class="form-control" name="user_phone" id="user_phone" />
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">우편번호</span>
+	<input type="text" class="form-control" name="zipcode" readonly="readonly" onclick="alert('검색버튼을 이용하여 입력하세요');" style="width:55px;"/>
+	<input type="button" value="검색" name="btnZipcode" onclick="openZipcode()" />
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">주소</span>
+	<input type="text" class="form-control" name="address1" style="width:250px;"/><br/>
+</div>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" style="width:105px;">상세 주소</span>
+	<input type="text" class="form-control" name="address2" /><br/>
+</div>
+<div align="center">
+	<a class="btn btn-primary" role="button" href="Login.do" >로그인 화면으로</a>
+	<input type="button" class="btn btn-primary" value="완료" onclick="validate()" />
+</div>
 </form>
+</div>
+</div>
 </body>
 </html>

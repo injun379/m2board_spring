@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/board.css" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="resources/se2/js/service/HuskyEZCreator.js"></script>
 <script type="text/javascript">
 var goUpdate = function(){
@@ -17,21 +18,20 @@ var goUpdate = function(){
 </script>
 </head>
 <body>
+<div class="container mt-3">
+ <div class="media border p-3" >
+ <h2>글 수정</h2>
 <form action="BoardUpdateAction.do" method="post" name="myform">
-<table>
-	<caption>글 수정</caption>
-<tr>
-	<th>번호</th>
-	<td>${boardDto.no }<input type="hidden" name="no" autofocus="autofocus" required="required" value="${boardDto.no }" readonly="readonly"/></td>
-</tr>
-<tr>
-	<th>제목</th>
-	<td><input type="text" name="title" style="width:645px;" autofocus="autofocus" required="required" value="${boardDto.title }"/></td>
-</tr>
-<tr>
-	<th>내용</th>
-	<td>
-		<textarea rows="5" style="width:645px;"  name="content" id="content" required="required" >${boardDto.content }</textarea>
+<div class="input-group mb-3 input-group-sm">
+	<span class="input-group-text" >${boardDto.no }</span>
+	<input type="hidden" class="form-control"  name="no" required="required" value="${boardDto.no }">
+</div>
+<div class="form-floating mb-3 mt-3">
+	<input type="text" class="form-control" name="title" autofocus="autofocus" placeholder="Enter Title" required="required" value="${boardDto.title }"/>
+	<label for="title">제목</label>
+</div>
+<div>
+		<textarea rows="5" name="content" id="content" required="required" style="width:100%;">${boardDto.content }</textarea>
 		<script type="text/javascript">
 			var oEditors = [];
 			nhn.husky.EZCreator.createInIFrame({
@@ -41,14 +41,14 @@ var goUpdate = function(){
 			 fCreator: "createSEditor2"
 			});
 		</script>
-	</td>
-</tr>
-<tr>
-	<td colspan="2" align="center">
-		<input type="submit" value="완료" />
-	</td>
-</tr>
-</table>
+</div>
+
+	<div>
+		<input type="button" value="완료" onclick="goUpdate();" />
+	</div>
+
 </form>
+</div>
+</div>
 </body>
 </html>

@@ -5,11 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/board.css" type="text/css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-<table border="1">
-	<caption>회원 가입 성공</caption>
+<div class="container mt-3">
+<h2>회원 가입 성공!!</h2>
+<p>회원 정보를 확인해보세요.</p>  
+<table class="table table-bordered">
 <tr>
 	<th>아이디</th>
 	<td>${memberDto.id}</td>
@@ -44,6 +48,6 @@
 		onclick="location.href='Login.do';" />
 	</td>
 </tr>
-</table>
-</body>
+  </table>
+</div>
 </html>

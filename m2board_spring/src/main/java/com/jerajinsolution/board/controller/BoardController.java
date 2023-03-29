@@ -155,7 +155,7 @@ public class BoardController {
 		}
 		
 		System.out.println("userInfo: " + userInfo);
-		String logInfo = userInfo.getName() + "(" + userInfo.getId() + ")님이 로그인하였습니다.";
+		String logInfo = userInfo.getName() + "(" + userInfo.getId() + ")님, 안녕하세요.";
 		
 		List<BoardDto> list = boardDao.selectBoardList();
 		
