@@ -42,6 +42,9 @@ public class MemberController {
 			HttpServletRequest request,
 			HttpServletResponse response) {
 		
+//		System.out.println(request.getServletContext().getRealPath("/").concat("resources/upload").toString());
+		System.out.println(session.getServletContext().getRealPath("/resources/upload"));
+		
 		MemberDto memberDto = new MemberDto();
 		memberDto.setId(id);
 		memberDto.setPassword(password);
@@ -57,23 +60,33 @@ public class MemberController {
 		
 		System.out.println("userInfo: " + userInfo);
 		
+		Cookie cookie;
+		try {
+			cookie = Cooker.createCookie("id", id, setidNum == 1 ? 60*60*24*30 : 0);
+			response.addCookie(cookie);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
 		if(userInfo != null) { //로그인 성공
-			Cookie cookie;
-			try {
-				cookie = Cooker.createCookie("id", id, setidNum == 1 ? 60*60*24*30 : 0);
-				response.addCookie(cookie);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			
 			System.out.println("로그인 성공!!");
 			session.setAttribute("userInfo", userInfo);
 			return "redirect:BoardList.do";
 		}else { //로그인 실패
 			System.out.println("로그인 실패~~");
-			model.addAttribute("msg", "아이디 혹은 패스워드가 틀립니다.");
-			model.addAttribute("url", "Login.do");	//로그인 화면 요청
-			return "/board/result";
+			
+			int idCnt = memberDao.selectId(id);
+			
+			if(idCnt == 0 ) {
+				model.addAttribute("msg", "존재하지 않는 아이디입니다.");
+				model.addAttribute("url", "Login.do");	//로그인 화면 재요청
+				return "/board/result";
+			}
+			else {
+				model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+				model.addAttribute("url", "Login.do");	//로그인 화면 재요청
+				return "/board/result";
+			}
 		}
 	}
 	
@@ -138,7 +151,7 @@ public class MemberController {
 	}
 	
 	/* 아이디 중복 체크 */
-	@RequestMapping(value="/CheckID.do", method= {RequestMethod.POST, RequestMethod.GET})
+	@RequestMapping(value="/CheckID.do", method= RequestMethod.POST)
 	public String checkID(Model model,
 			@RequestParam(value="user_id", required=true) String id) {
 		int idCount = memberDao.selectId(id);

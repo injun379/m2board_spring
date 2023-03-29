@@ -27,6 +27,8 @@ public class FileController {
 	@Autowired
 	private FileInterface fileDao;
 	
+	public static String FILE_LOACTION = "C:/Users/jerajin/git/jerajinwebstudy/m2board_spring/src/main/webapp/resources/upload";
+	
 	/* 게시물 파일 다운로드  */
 	@RequestMapping(value="/Download.do", method=RequestMethod.GET)
 	public String downloadFile(Model model,
@@ -43,8 +45,6 @@ public class FileController {
 		
 		FileDto fileDto = fileDao.selectFile(fno);
 		
-		String fileLocation = "C:/oraclejava/upload";
-		
 		response.setContentType("application/octet-stream");
 		try {
 			response.setHeader("Content-Disposition", "attachment;filename=\"" + //다른 이름으로 저장
@@ -53,7 +53,7 @@ public class FileController {
 			System.out.println(fileDto);
 			
 			byte[] data = new byte[1024 * 100];
-			InputStream is = new BufferedInputStream(new FileInputStream(fileLocation + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName()));
+			InputStream is = new BufferedInputStream(new FileInputStream(FILE_LOACTION + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName()));
 			OutputStream os = new BufferedOutputStream(response.getOutputStream());
 			while(is.read(data) != -1) {
 				os.write(data);

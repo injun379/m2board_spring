@@ -20,28 +20,33 @@ var confirm_delete = function(){
 </head>
 <body>
 <div class="container mt-3 border p-3">
-  <h2>${boardDto.no }. ${boardDto.title }</h2>
-  <p>${boardDto.memberDto.name }(${boardDto.memberDto.id }) <small><i>${boardDto.regdate }</i></small></p>
-  <p>조회수 : ${boardDto.readcount }</p>
-  <div class="media border p-3">
-   
-    <div class="media-body">
-     
-      ${boardDto.content }   
-      <c:forEach items="${boardDto.fileList }" var="fileDto" varStatus="st">
-		file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)<br/>
-		</c:forEach>
-    </div>
-  </div>
-  
-  <div class="btn-group">
-<a class="btn btn-secondary" role="button" href="BoardList.do" >목록으로</a>
-<c:if test="${boardDto.memberDto.id == sessionScope.userInfo.id }"> <!-- DB에서 가져온 해당 글 작성자 id와 세션 id가 일치 -->
-	<a class="btn btn-secondary" role="button" href="BoardUpdate.do?no=${boardDto.no }">수정</a>
-	<a class="btn btn-secondary" role="button" href="javascript:;" onclick="confirm_delete();">삭제</a>
-</c:if>
+	<h2>${boardDto.no }. ${boardDto.title }</h2>
+	<p>${boardDto.memberDto.name }(${boardDto.memberDto.id }) <small><i>${boardDto.regdate }</i></small></p>
+	<p>조회수 : ${boardDto.readcount }</p>
+	<div class="media border p-3">
+		<div class="media-body">
+			
+			${boardDto.content }   
+     		 <c:forEach items="${boardDto.fileList }" var="fileDto" varStatus="st">
+     		 	<img src="resources/upload/${fileDto.folder }/${fileDto.targetName }" width="100%" />
+				file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)<br/>
+			</c:forEach>
+    	</div>
+  	</div>
+	<br/>
+	<div class="row">
+		<div class="col-sm-6" align="left">
+   			<a class="btn btn-secondary" role="button" href="BoardList.do" >목록으로</a>
+  		</div>
+ 		<div class="col-sm-6" align="right">
+			<div class="btn-group">
+				<c:if test="${boardDto.memberDto.id == sessionScope.userInfo.id }"> <!-- DB에서 가져온 해당 글 작성자 id와 세션 id가 일치 -->
+					<a class="btn btn-primary" role="button" href="BoardUpdate.do?no=${boardDto.no }">수정</a>
+					<a class="btn btn-danger" role="button" href="javascript:;" onclick="confirm_delete();">삭제</a>
+				</c:if>
+			</div>
+		</div>
+	</div>
 </div>
-</div>
-
 </body>
 </html>

@@ -117,10 +117,10 @@ function callback(xhr){
 			user_id_count = parseInt(xhr.responseText.trim());
 			//alert('user_id_count : ' + user_id_count);
 			if(user_id_count == 1){
-				document.getElementById('check_id_result').innerHTML = '<form style="color:red">' + user_id + '는 이미 사용중인 아이디입니다.</form>';
+				document.getElementById('check_id_result').innerHTML = '<font style="color:red;">' + user_id + '는 이미 사용중인 아이디입니다.</form>';
 				return;
 			}else if(user_id_count == 0){
-				document.getElementById('check_id_result').innerHTML = '<form style="color:red">' + user_id + '는 사용 가능한 아이디입니다.</form>';
+				document.getElementById('check_id_result').innerHTML = '<font style="color:green;">' + user_id + '는 사용 가능한 아이디입니다.</form>';
 				return;
 			}else{
 				alert('시스템 오류입니다...')
@@ -132,54 +132,64 @@ function callback(xhr){
 </script>
 </head>
 <body>
-<div class="container mt-3">
- <div class="media border p-3" style="width:max-content;">
-  <h2>회원 가입</h2>
-<form name="regist" method="post">
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">아이디</span>
-	<input type="text" class="form-control" name="user_id" id="user_id" onkeyup="change_user_id()"/>
-	<div id="check_id_result">영문자+숫자 3~12문자로 작성하세요.</div>
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">이름</span>
-	<input type="text" class="form-control"name="user_name" id="user_name" />2~6문자
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">비밀번호</span>
-	<input type="password" class="form-control" name="user_pw" id="user_pw" />4~20문자
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">비밀번호 확인</span>
-	<input type="password" class="form-control" name="user_pw2" id="user_pw2" />
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">생일</span>
-	<input type="date" class="form-control" name="user_birth" id="user_birth" />
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">전화</span>
-	<input type="text" class="form-control" name="user_phone" id="user_phone" />
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">우편번호</span>
-	<input type="text" class="form-control" name="zipcode" readonly="readonly" onclick="alert('검색버튼을 이용하여 입력하세요');" style="width:55px;"/>
-	<input type="button" value="검색" name="btnZipcode" onclick="openZipcode()" />
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">주소</span>
-	<input type="text" class="form-control" name="address1" style="width:250px;"/><br/>
-</div>
-<div class="input-group mb-3 input-group-sm">
-	<span class="input-group-text" style="width:105px;">상세 주소</span>
-	<input type="text" class="form-control" name="address2" /><br/>
-</div>
-<div align="center">
-	<a class="btn btn-primary" role="button" href="Login.do" >로그인 화면으로</a>
-	<input type="button" class="btn btn-primary" value="완료" onclick="validate()" />
-</div>
-</form>
-</div>
+<div class="container mt-3" style="width:500px;">
+	<div class="media border p-3" align="center">
+		<h2>회원 가입</h2>
+		<form name="regist" method="post">
+			<div  align="right"><label for="user_id"id="check_id_result">영문자+숫자 3~12문자로 작성하세요</label></div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">아이디</span>
+				<input type="text" class="form-control" name="user_id" id="user_id" onkeyup="change_user_id()"/>
+			</div>
+			<div  align="right">
+				<label for="user_name">2~6문자</label>
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">이름</span>
+				<input type="text" class="form-control"name="user_name" id="user_name" />
+			</div>
+			<div align="right">
+				<label for="user_pw">4~20문자</label>
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">비밀번호</span>
+				<input type="password" class="form-control" name="user_pw" id="user_pw" />
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">비밀번호 확인</span>
+				<input type="password" class="form-control" name="user_pw2" id="user_pw2" />
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">생일</span>
+				<input type="date" class="form-control" name="user_birth" id="user_birth" />
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">전화</span>
+				<input type="text" class="form-control" name="user_phone" id="user_phone" />
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">우편번호</span>
+				<input type="text" class="form-control" name="zipcode" readonly="readonly" onclick="alert('검색버튼을 이용하여 입력하세요');" style="width:55px;"/>
+				<input type="button" value="검색" name="btnZipcode" onclick="openZipcode()" />
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">주소</span>
+				<input type="text" class="form-control" name="address1" style="width:250px;"/><br/>
+			</div>
+			<div class="input-group mb-3 input-group-sm">
+				<span class="input-group-text" style="width:105px;">상세 주소</span>
+				<input type="text" class="form-control" name="address2" /><br/>
+			</div>
+			<div class="row">
+				<div class="col-sm-6" align="left">
+					<a class="btn btn-secondary" role="button" href="Login.do" >로그인 화면으로</a>
+				</div>
+				<div class="col-sm-6" align="right">
+					<input type="button" class="btn btn-primary" value="완료" onclick="validate()" />
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 </body>
 </html>

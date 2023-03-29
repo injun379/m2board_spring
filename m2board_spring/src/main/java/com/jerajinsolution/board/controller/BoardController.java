@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jerajinsolution.board.service.BoardDto;
 import com.jerajinsolution.board.service.BoardInterface;
+import com.jerajinsolution.file.controller.FileController;
 import com.jerajinsolution.file.service.FileDto;
 import com.jerajinsolution.file.service.FileInterface;
 import com.jerajinsolution.member.service.MemberDto;
@@ -62,9 +63,12 @@ public class BoardController {
 			return "/board/result";
 		}
 		
-		String fileLocation = "C:/oraclejava/upload";
+//		String fileLocation = "C:/oraclejava/upload";
 		String folder = FileDto.getFolderDate();	//문자열로 현재 연월일을 얻어온다. ex)20230216
-		File uploadPath = new File(fileLocation, folder);	//new File("C:/oraclejava/upload", 20230216);
+		File uploadPath = new File(FileController.FILE_LOACTION, folder);	//new File("C:/oraclejava/upload", "20230216");
+		
+		System.out.println(uploadPath);
+		
 		if(!uploadPath.exists()) {	//폴더 존재 여부 확인
 			uploadPath.mkdirs();	//만들고자 하는 디렉토리의 상위 디렉토리가 존재하지 않을 경우, 상위 디렉토리까지 생성
 		}
@@ -76,7 +80,7 @@ public class BoardController {
 			long size = list.get(i).getSize();
 			
 			System.out.println("파일명 :" + fileRealName);
-			System.out.println("사이즈" + size);
+			System.out.println("사이즈 :" + size);
 			
 			File saveFile = new File(uploadPath.toString() + "/" + fileRealName);
 			
@@ -263,8 +267,6 @@ public class BoardController {
 			@RequestParam(value="no", required=true) Long no) {
 		MemberDto userInfo = (MemberDto) session.getAttribute("userInfo");
 		
-		String fileLocation = "C:/oraclejava/upload";
-		
 		if(userInfo==null) { //세션에 정보가 없을 경우(로그인하지 않았거나, 이미 로그아웃한 경우)
 			model.addAttribute("msg", "먼저 로그인하셔야 합니다.");
 			model.addAttribute("url", "Login.do");
@@ -285,7 +287,7 @@ public class BoardController {
 		
 		List<FileDto> fileList = fileDao.selectBoardFile(no);
 		for(FileDto fileDto : fileList) {
-			File file = new File(fileLocation + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName());
+			File file = new File(FileController.FILE_LOACTION + "/" + fileDto.getFolder() + "/" + fileDto.getTargetName());
 			
 			if(file.exists() == true){		
 				file.delete();				// 해당 경로의 파일이 존재하면 파일 삭제
