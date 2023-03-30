@@ -28,8 +28,10 @@ var confirm_delete = function(){
 			
 			${boardDto.content }   
      		 <c:forEach items="${boardDto.fileList }" var="fileDto" varStatus="st">
-     		 	<img src="resources/upload/${fileDto.folder }/${fileDto.targetName }" width="100%" />
-				file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)<br/>
+     		 	<img src="resources/upload/${fileDto.folder }/${fileDto.targetName }" width="50%" />
+     		 	<br>
+				file #${st.count} : <a href="Download.do?fno=${fileDto.fno }">${fileDto.targetName }</a> (${fileDto.fileSize }bytes)
+				<p></p>
 			</c:forEach>
     	</div>
   	</div>

@@ -188,8 +188,14 @@ public class BoardController {
 			return "/board/result";
 		}
 		
-		if(boardDao.updateReadcount(no) >= 1) {
-			BoardDto boardDto = boardDao.selectBoardDetail(no);
+		BoardDto boardDto = boardDao.selectBoardDetail(no);
+		
+		if(boardDto != null) {
+			if(userInfo.getId().equals(boardDto.getMemberDto().getId())) {
+			} else {
+				boardDto.setReadcount(boardDto.getReadcount() + 1);
+				boardDao.updateReadcount(no);
+			}
 			List<FileDto> fileList = fileDao.selectBoardFile(no); 
 			boardDto.setFileList(fileList);
 			model.addAttribute("boardDto", boardDto);

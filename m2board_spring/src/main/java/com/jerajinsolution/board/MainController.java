@@ -9,6 +9,6 @@ public class MainController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main() {
-		return "/member/login";
+		return "redirect:BoardList.do";
 	}
 }

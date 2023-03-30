@@ -12,50 +12,76 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 $(document).ready(function(){
-  $("#myInput").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
 
-  var s = $('.search_icon'),
+	var s = $('.search_icon'),
 	f  = $('.search_form'),
 	a = $('.after'),
-	    m = $('h4');
-  
-	s.focus(function(){
-	if( f.hasClass('open') ) return;
-	f.addClass('in');
-	setTimeout(function(){
-	f.addClass('open');
-	f.removeClass('in');
-	}, 1300);
+	m = $('h4');
+	
+	$("#myInput").on("keyup", function(event) {
+		
+		if(event.keyCode == 27 || event.which == 27) {
+			event.preventDefault();
+			if( !f.hasClass('open') ) return;
+			
+			f.addClass('close');
+			f.removeClass('open');
+			s.val('');
+			
+			setTimeout(function(){
+				f.removeClass('close');
+				}, 1300);
+		}
+
+		var value = $(this).val();
+		
+		$("#myTable tr").filter(function() {
+			$(this).toggle($(this).text().toLowerCase().indexOf(value.toLowerCase()) > -1)
+		});
+	});
+
+	
+	s.on('click', function(){
+		if( f.hasClass('open') ) return;
+		
+		f.addClass('in');
+		
+		setTimeout(function(){
+			f.addClass('open');
+			f.removeClass('in');
+			}, 1300);
+		
+		
 	});
 	
 	a.on('click', function(e){
-	e.preventDefault();
-	if( !f.hasClass('open') ) return;
-	s.val('');
-	f.addClass('close');
-	f.removeClass('open');
-	setTimeout(function(){
-	f.removeClass('close');
-	}, 1300);
+		e.preventDefault();
+		if( !f.hasClass('open') ) return;
+		f.addClass('close');
+		f.removeClass('open');
+		setTimeout(function(){
+			f.removeClass('close');
+			}, 1300);
+		s.val('');
+		var value = $(this).val().toLowerCase();
+		 $("#myTable tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
 	})
 	
+	
+	
 	f.submit(function(e){
-	e.preventDefault();
-	m.html('Thanks, high five!').addClass('show');
-	f.addClass('explode');
-	setTimeout(function(){
-	s.val('');
-	f.removeClass('explode');
-	m.removeClass('show');
-	}, 3000);
+		e.preventDefault();
+		m.html('Thanks, high five!').addClass('show');
+		f.addClass('explode');
+		setTimeout(function(){
+			f.removeClass('explode');
+			m.removeClass('show');
+			}, 1300);
 	})
-});
 
+});
 </script>
 </head>
 <body>
@@ -64,15 +90,12 @@ $(document).ready(function(){
 	<p align="right">${logInfo } <a class="btn btn-light" role="button" href="Logout.do">로그아웃</a></p>
 	<h2 align="center">게시판</h2>
 	<br>
-	<div class="search_form" >
-			  <input class="search_icon" id="myInput" type="text" placeholder="빠른 검색" />
-			  <div class="after"></div>
-<!-- 			  <input class="search_icon" type="submit" /> -->
-			</div>
-	<div class="input-group mb-3 input-group-sm">
-<!-- 		<span class="input-group-text">빠른 검색</span> -->
-<!-- 		<input class="form-control" id="myInput" type="text" placeholder="Search.."> -->
-	</div>
+	<form class="search_form">
+		<input class="search_icon" id="myInput" type="text" placeholder="빠른 검색" />
+		<div class="after"></div>
+		<input class="search_icon" type="submit" />
+	</form>
+	<br>
 	<table class="table">
 		<thead class="thead-dark">
 			<tr>
